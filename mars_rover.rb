@@ -1,18 +1,12 @@
-
-
-# class Plateau
-#   def initialize(xr,yr)
-
-#     # ask for coords
-#     # puts "Enter upper-right x coordinate"
-#     # x = gets.chomp.to_i
-#     # puts "Enter upper-right y coordinate"
-#     # y = gets.chomp.to_i
-
-#   end
-# end
-
 class Rover
+
+  DIRECT = {
+      'N' => ['W', 'E', [0,1]],
+      'S' => ['E', 'W', [0,-1]],
+      'E' => ['N', 'S', [1,0]],
+      'W' => ['S', 'N', [-1,0]]
+    }
+
   def initialize (x,y)
     #Plateau.new(x,y)
     @upr_x = x
@@ -22,41 +16,41 @@ class Rover
   def position(l_r,u_d,facing)
     puts "this is where we will move to"
     puts l_r, u_d, facing
-    "#{l_r}, #{u_d}, #{facing}"
+    @current = []
+    @current << l_r
+    @current << u_d
+    @current << facing
   end
 
+  def goforth(arr,c)
+    xc = arr[0] + c[2][0]
+    yc = arr[1] + c[2][1]
+    position(xc,yc,arr[2])
+
+  end
+
+
   def explore(var)
-    what = var.split("")
-    what.each {|i| puts i}
-
-
-    facing N 
-    M = +y
-    LM = -x f = W
-    RM = +x f = E
-    facing S
-    M = -y
-    LM = +x f = E
-    RM = -x f = W
-    facing E
-    M = +x
-    LM = +y f = N
-    RM = -y f = S
-    facing W
-    M = -x
-    LM = -y f = S
-    RM = +y f = N
-
-    N['W', 'E', (0,1)]
-    S['E', 'W', (0,-1)]
-    E['N', 'S', (1,0)]
-    W['S', 'N', (-1,0)]
-
+    what = var.split("")    
+    here = what.map do |i| 
+      c = @current[2]
+      @other = DIRECT[c]
+      if i == 'M' 
+        @current = goforth(@current,@other)
+      elsif i == 'L' 
+        @current[2] = @other[0]
+      elsif i == 'R'
+        @current[2] = @other[1]
+      end
+    here[-1]
+    end
   end
 end
 
 rex = Rover.new(5,5)
 puts rex.inspect
 start = rex.position(1,2,'N')
-puts start.inspect
+
 move = rex.explore('LMLMLMLMM')
+puts "the final count down"
+puts move

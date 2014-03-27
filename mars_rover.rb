@@ -14,8 +14,6 @@ class Rover
   end
 
   def position(l_r,u_d,facing)
-    puts "this is where we will move to"
-    puts l_r, u_d, facing
     @current = []
     @current << l_r
     @current << u_d
@@ -42,15 +40,17 @@ class Rover
       elsif i == 'R'
         @current[2] = @other[1]
       end
-    here[-1]
     end
+    here[-1]
   end
 end
 
 rex = Rover.new(5,5)
-puts rex.inspect
 start = rex.position(1,2,'N')
 
 move = rex.explore('LMLMLMLMM')
-puts "the final count down"
-puts move
+puts "#{move[0]} #{move[1]} #{move[2]}"
+
+again = rex.position(3, 3, 'E')
+move = rex.explore('MMRMMRMRRM')
+puts "#{move[0]} #{move[1]} #{move[2]}"

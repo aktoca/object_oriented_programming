@@ -1,8 +1,4 @@
-class Current
-  def initialize(x,y,facing)
-    "[#{x}, #{y}, #{facing}]"
-  end
-end
+
 
 # class Plateau
 #   def initialize(xr,yr)
@@ -29,13 +25,38 @@ class Rover
     "#{l_r}, #{u_d}, #{facing}"
   end
 
-  def explore()
+  def explore(var)
+    what = var.split("")
+    what.each {|i| puts i}
+
+
+    facing N 
+    M = +y
+    LM = -x f = W
+    RM = +x f = E
+    facing S
+    M = -y
+    LM = +x f = E
+    RM = -x f = W
+    facing E
+    M = +x
+    LM = +y f = N
+    RM = -y f = S
+    facing W
+    M = -x
+    LM = -y f = S
+    RM = +y f = N
+
+    N['W', 'E', (0,1)]
+    S['E', 'W', (0,-1)]
+    E['N', 'S', (1,0)]
+    W['S', 'N', (-1,0)]
 
   end
 end
 
 rex = Rover.new(5,5)
 puts rex.inspect
-move = rex.position(1,2,'N')
-puts move.inspect
-puts move[0]
+start = rex.position(1,2,'N')
+puts start.inspect
+move = rex.explore('LMLMLMLMM')

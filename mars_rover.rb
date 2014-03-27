@@ -14,17 +14,13 @@ class Rover
   end
 
   def position(l_r,u_d,facing)
-    @current = []
-    @current << l_r
-    @current << u_d
-    @current << facing
+    @current = [l_r, u_d,facing]
   end
 
   def goforth(arr,c)
     xc = arr[0] + c[2][0]
     yc = arr[1] + c[2][1]
     position(xc,yc,arr[2])
-
   end
 
 
@@ -48,7 +44,10 @@ end
 rex = Rover.new(5,5)
 start = rex.position(1,2,'N')
 
-move = rex.explore('LMLMLMLMM')
+wheretogo = 'LMLMLMLMM'
+wheretogo = gets.chomp
+
+move = rex.explore(wheretogo)
 puts "#{move[0]} #{move[1]} #{move[2]}"
 
 again = rex.position(3, 3, 'E')

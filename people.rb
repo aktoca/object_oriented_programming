@@ -40,3 +40,12 @@ u.greeting
 #ex1.7
 i = Student.new("Christina")
 i.greeting
+
+# ex1.8
+u.teach
+i.learn
+puts
+puts "ERROR: undefined method teach on student class"
+puts "b/c students don't know enough to teach"
+puts "... also meaning 'teach' method is out of scope of student class"
+i.teach

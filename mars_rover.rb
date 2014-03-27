@@ -1,33 +1,32 @@
-class Plateau
-  def initialize(xr,yr)
-    @lowr_x = 0
-    @lowr_y = 0
-    # ask for coords
-    # puts "Enter upper-right x coordinate"
-    # x = gets.chomp.to_i
-    # puts "Enter upper-right y coordinate"
-    # y = gets.chomp.to_i
-    @upr_x = xr
-    @upr_y = yr 
-
+class Current
+  def initialize(x,y,facing)
+    "[#{x}, #{y}, #{facing}]"
   end
 end
 
-class Rover < Plateau
+# class Plateau
+#   def initialize(xr,yr)
+
+#     # ask for coords
+#     # puts "Enter upper-right x coordinate"
+#     # x = gets.chomp.to_i
+#     # puts "Enter upper-right y coordinate"
+#     # y = gets.chomp.to_i
+
+#   end
+# end
+
+class Rover
   def initialize (x,y)
-    super
-    puts @lowr_x
-    puts @lowr_y
-    puts x
-    puts y
+    #Plateau.new(x,y)
+    @upr_x = x
+    @upr_y = y
   end
 
   def position(l_r,u_d,facing)
-    puts l_r
-    puts @lowr_x
-    puts u_d
-    puts @lowr_y
-    #Rover.new(@lowr_x + l_r, @lowry + u_d)
+    puts "this is where we will move to"
+    puts l_r, u_d, facing
+    "#{l_r}, #{u_d}, #{facing}"
   end
 
   def explore()
@@ -36,5 +35,7 @@ class Rover < Plateau
 end
 
 rex = Rover.new(5,5)
-move.position(1,2,'N')
-puts move
+puts rex.inspect
+move = rex.position(1,2,'N')
+puts move.inspect
+puts move[0]

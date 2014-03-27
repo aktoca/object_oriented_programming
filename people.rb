@@ -1,4 +1,13 @@
-class Student
+class Person
+ attr_accessor :name
+  def initialize(name)
+    @name = name
+    puts @name
+      
+  end
+end
+
+class Student < Person
 
   def learn
     puts "I get it!"
@@ -7,7 +16,7 @@ class Student
 end
 
 
-class Instructor
+class Instructor < Person
 
   def teach
     puts "Everything in Ruby is an Object."
@@ -17,8 +26,8 @@ end
 
 
 #test executability
-i = Student.new
+i = Student.new("me")
 i.learn
 
-u = Instructor.new
+u = Instructor.new("everyone")
 u.teach 

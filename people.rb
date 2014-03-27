@@ -37,7 +37,6 @@ u = Instructor.new("Chris")
 u.greeting
 
 
-#test executability
-# i = Student.new("me")
-# i.learn
-# i.greeting
+#ex1.7
+i = Student.new("Christina")
+i.greeting

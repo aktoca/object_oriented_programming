@@ -25,16 +25,19 @@ class Rover
 
 
   def explore(var)
+    #split the directions into steps
     what = var.split("")    
     here = what.map do |i| 
-      c = @current[2]
-      @other = DIRECT[c]
-      if i == 'M' 
-        @current = goforth(@current,@other)
+      
+      c = @current[2]  #grab the current direction
+
+      @d_specs = DIRECT[c]  #find the movements needed for sepecific direction
+      if i == 'M'   
+        @current = goforth(@current,@d_specs)
       elsif i == 'L' 
-        @current[2] = @other[0]
+        @current[2] = @d_specs[0]
       elsif i == 'R'
-        @current[2] = @other[1]
+        @current[2] = @d_specs[1]
       end
     end
     here[-1]
@@ -42,9 +45,10 @@ class Rover
 end
 
 rex = Rover.new(5,5)
+#input start position here = gets.chomp.split('')
 start = rex.position(1,2,'N')
 
-wheretogo = 'LMLMLMLMM'
+#wheretogo = 'LMLMLMLMM'
 wheretogo = gets.chomp
 
 move = rex.explore(wheretogo)

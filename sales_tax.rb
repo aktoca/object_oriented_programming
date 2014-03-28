@@ -29,13 +29,17 @@ class Create
   end
   
   def solo
+  #chops the hasd into individual lines
     a = []
     @d.each {|k,v| a << line_item(v)}
     a
   end
 
   def line_item(order)
+  #breaks down the line into each part
+   # and prints it ?(should be seperate)?
     @order = order
+    
     #define units 
     line = @order.split
     @qty = line.shift
@@ -76,11 +80,10 @@ cust1 = {
   line1: "1 book at 12.49",
   line2: "1 music CD at 14.99",
   line3:"1 chocolate bar at 0.85"
-}
+} #?does this have to be a hash orcould it be an array,easier?
 
-one = Create.new(cust1)
-w = one.solo
-beep = Receipt.new(w)
+one = Create.new(cust1) #?how can these three lines be one?
+beep = Receipt.new(one.solo) 
 beep.totals
 
 
@@ -90,8 +93,7 @@ cust2 = {
   line2: "1 imported bottle of perfume at 47.50"
 }
 two = Create.new(cust2)
-v = two.solo
-beep = Receipt.new(v)
+beep = Receipt.new(two.solo)
 beep.totals
 
 
@@ -103,8 +105,9 @@ cust3 = {
   line4: "1 box of imported chocolates at 11.25"
 }
 three = Create.new(cust3)
-u = three.solo
-beep = Receipt.new(u)
+beep = Receipt.new(three.solo)
 beep.totals
 
 
+# Get input from user:
+# one line input and make into an array

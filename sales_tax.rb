@@ -1,3 +1,11 @@
+class Calc
+  def self.gov(tax, p)
+    @tax = tax
+    @p = p
+    raw_value = (@p * @tax).round(2)
+    rounded_value = (raw_value * 20).ceil / 20.0
+  end
+end
 
 class Create
   DUTY = 0.05
@@ -17,13 +25,10 @@ class Create
   end
 
   def extra(item, p)
-    tax = isexempt?(item) ? 0 :  (p *RATE).round(2)
-    if item.include?("imported")
-      duties = (p *DUTY).round(2)
-    else
-      duties= 0
-    end
-    0 + tax + duties
+    p = p.to_f
+    tax = isexempt?(item) ? 0 : Calc.gov(RATE,p)
+    duty = item.include?("imported") ? Calc.gov(DUTY,p) : 0
+    0 + tax.to_f + duty.to_f
   end
 
   def line_item
@@ -40,9 +45,9 @@ class Create
   end
 end
   
-class Calcu
+class Receipt
     def initialize(a)
-      @a = a  
+      @a = a
     end
     def totals
       puts "Sales Tax: #{@a[1].inject{|x,y|x+y}}"
@@ -50,7 +55,7 @@ class Calcu
     end
 end
 
-
+#CUSTOMER 1
 # a = "1 book at 12.49"
 # b = "1 music CD at 14.99"
 # c = "1 chocolate bar at 0.85"
@@ -63,6 +68,8 @@ end
 # y = three.line_item
 # l = w.zip(x, y)
 
+
+#CUSTOMER 2
 a = "1 imported box of chocolates at 10.00"
 b = "1 imported bottle of perfume at 47.50"
 
@@ -72,6 +79,8 @@ two = Create.new(b)
 x = two.line_item
 l = w.zip(x)
 
+
+#CUSTOMER 3
 # a = "1 imported bottle of perfume at 27.99"
 # b = "1 bottle of perfume at 18.99"
 # c = "1 packet of headache pills at 9.75"
@@ -87,5 +96,5 @@ l = w.zip(x)
 #l = w.zip(x, y, z)
 
 
-beep = Calcu.new(l)
+beep = Receipt.new(l)
 beep.totals

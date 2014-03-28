@@ -23,13 +23,19 @@ class Create
   DUTY = 0.05
   RATE = 0.10
 
-  def initialize(var)
-    @order = var
+  def initialize(h)
+    @d = h.each {|k,v| instance_variable_set("@#{k}",v)}
+    @d
+  end
+  
+  def solo
+    a = []
+    @d.each {|k,v| a << line_item(v)}
+    a
   end
 
-
-  def line_item
-
+  def line_item(order)
+    @order = order
     #define units 
     line = @order.split
     @qty = line.shift
@@ -50,59 +56,55 @@ class Create
 
     #output to print in Rece
     a = [@cost.round(2), taxes.round(2)]
+
   end
 end
   
 class Receipt
     def initialize(a)
-      @a = a
-    end
+      @sales = a.map {|x| x[1]}
+      @total = a.map {|x| x[0]}
+   end
     def totals
-      puts "Sales Tax: #{(@a[1].inject{|x,y|x+y}).round(2)}"
-      puts "Total: #{(@a[0].inject{|x,y|x+y}).round(2)}"
+      puts "Sales Tax: #{(@sales.inject{|x,y| x+y}).round(2)}"
+      puts "Total: #{(@total.inject{|x,y|x+y}).round(2)}"
     end
 end
 
 #CUSTOMER 1
-# a = "1 book at 12.49"
-# b = "1 music CD at 14.99"
-# c = "1 chocolate bar at 0.85"
+cust1 = {
+  line1: "1 book at 12.49",
+  line2: "1 music CD at 14.99",
+  line3:"1 chocolate bar at 0.85"
+}
 
-# one = Create.new(a)
-# w = one.line_item
-# two = Create.new(b)
-# x = two.line_item
-# three = Create.new(c)
-# y = three.line_item
-# l = w.zip(x, y)
+one = Create.new(cust1)
+w = one.solo
+beep = Receipt.new(w)
+beep.totals
 
 
 #CUSTOMER 2
-# a = "1 imported box of chocolates at 10.00"
-# b = "1 imported bottle of perfume at 47.50"
-
-# one = Create.new(a)
-# w = one.line_item
-# two = Create.new(b)
-# x = two.line_item
-# l = w.zip(x)
+cust2 = {
+  line1: "1 imported box of chocolates at 10.00",
+  line2: "1 imported bottle of perfume at 47.50"
+}
+two = Create.new(cust2)
+v = two.solo
+beep = Receipt.new(v)
+beep.totals
 
 
 #CUSTOMER 3
-a = "1 imported bottle of perfume at 27.99"
-b = "1 bottle of perfume at 18.99"
-c = "1 packet of headache pills at 9.75"
-d = "1 box of imported chocolates at 11.25"
-jim = Create.new(a)
-w = jim.line_item
-jack = Create.new(b)
-x = jack.line_item
-john = Create.new(c)
-y = john.line_item
-jill = Create.new(d)
-z = jill.line_item
-l = w.zip(x, y, z)
-
-
-beep = Receipt.new(l)
+cust3 = {
+  line1: "1 imported bottle of perfume at 27.99",
+  line2: "1 bottle of perfume at 18.99",
+  line3: "1 packet of headache pills at 9.75",
+  line4: "1 box of imported chocolates at 11.25"
+}
+three = Create.new(cust3)
+u = three.solo
+beep = Receipt.new(u)
 beep.totals
+
+

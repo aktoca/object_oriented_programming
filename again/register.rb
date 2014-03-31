@@ -2,26 +2,25 @@ class Register
   EXEMPT = %w( book books chocolate chocotates headache pills)
 
   def initialize
-    @basket = []
+    
   end
   
   def checkout(basket_items)
     basket_items.each do |x|
       x = x.split(" ")
-      qty = x.shift.to_i
-      price = x.pop.to_i
+      qty = x.shift.to_f
+      price = x.pop.to_f
       x.delete("at")
       item = x.join(" ")
-      basket = Basket.new
-      basket.qty = qty
-      basket.price = price
-      basket.item = item 
-      @basket << basket
+      @basket = Basket.new
+      @basket.qty = qty
+      @basket.price = price
+      @basket.item = item 
     end
   end
 
-  def nonexempt?
-    if @basket.items.include?(EXEMPT)
+  def nonexempt?(items)
+    if EXEMPT.include?(items)
       false
     else
       true
@@ -30,8 +29,13 @@ class Register
   end
 
   def taxes
-    @basket.sales_tax = (basket.price * 0.10) if @basket.item.nonexempt?
-    @basket.duty  = (@basket.price * 0.05) if @basket.item.include("imported")
+    puts @basket.price
+    item = @basket.item
+    @basket.import_duty  = (@basket.price * 0.05) if item.include?("imported")
+    puts @basket.import_duty
+    @basket.sales_tax = (@basket.price * 0.10) if nonexempt?(item)
+    
+    puts @basket.sales_tax
   end
 
 
